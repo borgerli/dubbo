@@ -31,7 +31,21 @@ public class Application {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-consumer.xml");
         context.start();
         DemoService demoService = context.getBean("demoService", DemoService.class);
-        CompletableFuture<String> hello = demoService.sayHelloAsync("world");
-        System.out.println("result: " + hello.get());
+
+        String name = "dubbo-envoy";
+        if (args.length > 0) {
+            name = args[0];
+        }
+        
+        int count = 6;
+
+        for(int i=0;i < count; i ++) {
+            CompletableFuture<String> hello = demoService.sayHelloAsync(name);
+            System.out.println("result: " + hello.get());
+        }        
+        
+        for(int i=0;i < count; i ++) {
+            System.out.println("result: " + demoService.sayHelloV3(name));
+        }
     }
 }

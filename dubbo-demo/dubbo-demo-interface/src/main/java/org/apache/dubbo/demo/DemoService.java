@@ -22,6 +22,10 @@ public interface DemoService {
 
     String sayHello(String name);
 
+    default String sayHelloV3(String name) {
+        return "v3:hello " + name;
+    }
+
     default CompletableFuture<String> sayHelloAsync(String name) {
         return CompletableFuture.completedFuture(sayHello(name));
     }
